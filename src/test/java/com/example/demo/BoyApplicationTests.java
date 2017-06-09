@@ -20,7 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-@Transactional(rollbackForClassName="BoyController.class")
+@Transactional(rollbackForClassName="BoyApplicationTests.class")
 public class BoyApplicationTests {
 	private MockMvc MockMvc;
 	
