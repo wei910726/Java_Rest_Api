@@ -44,7 +44,7 @@ public class BoyApplicationTests {
 		assertEquals("BB", name);
 	}
 	
-	@Test
+/*	@Test
 	public void testBoyAdd(){
 		boyController.boyAdd(17, "CC");
 		boy real = boyController.boySearch(3);
@@ -58,7 +58,7 @@ public class BoyApplicationTests {
 	public void testBoyDel(){
 		boyController.boyDelete(3);
 		assertNull(boyController.boySearch(3));
-	}
+	}*/
 	
 	@Test
 	public void testBoyList(){
