@@ -1,7 +1,10 @@
 package com.example.demo;
 
-import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,18 +20,16 @@ import org.springframework.web.context.WebApplicationContext;
 
 
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-@Transactional(rollbackForClassName="BoyApplicationTests.class")
+@Transactional()
 public class BoyApplicationTests {
 	private MockMvc MockMvc;
 	
 	@Autowired
     protected WebApplicationContext wac;
+	
 
-	@Autowired
-	private BoyController boyController;
 	
 	@Before()
 	public void Setup() throws Exception{
@@ -36,38 +37,32 @@ public class BoyApplicationTests {
 	}
 	
 	@Test
-	public void testBoySearch(){
-		boy boy1 = boyController.boySearch(2);
-		int age = boy1.getAge();
-		String name = boy1.getName();
-		assertEquals(16,age);
-		assertEquals("BB", name);
+	public void testBoyList()throws Exception {
+        MockMvc.perform(get("/boys")
+        	.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(status().isOk());
 	}
 	
-/*	@Test
-	public void testBoyAdd(){
-		boyController.boyAdd(17, "CC");
-		boy real = boyController.boySearch(3);
-		String name = real.getName();
-		int age = real.getAge();
-		assertEquals(17,age);
-		assertEquals("CC", name);
-	} 
+	@Test
+	public void testBoyAdd() throws Exception{
+		MockMvc.perform(post("/boys?age=17&name=gab"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.age").value(17))
+			.andExpect(jsonPath("$.name").value("gab")); 
+	}
 	
 	@Test
-	public void testBoyDel(){
-		boyController.boyDelete(3);
-		assertNull(boyController.boySearch(3));
-	}*/
+	public void testBoyUpdate() throws Exception{
+		MockMvc.perform(put("/boys/2?age=11&name=tim"))
+		    .andExpect(status().isOk())
+		    .andExpect(jsonPath("$.age").value(11))
+		    .andExpect(jsonPath("$.name").value("tim"));
+	}
 	
 	@Test
-	public void testBoyList(){
-		try {
-			MockMvc.perform(get("/boys").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-			.andExpect(status().isOk());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void testBoyDel() throws Exception{
+		MockMvc.perform(delete("/boys/2"))
+	    .andExpect(status().isOk());
 	}
 
 }
