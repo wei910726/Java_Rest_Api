@@ -1,8 +1,5 @@
 server:
     port: 8089
-boy:
-    height: 170
-    weight: 80
 spring:
     datasource:
       driver-class-name: com.mysql.jdbc.Driver
