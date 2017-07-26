@@ -6,6 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.example.demo.web.simctrl;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,32 +28,33 @@ import org.springframework.web.context.WebApplicationContext;
 @Transactional()
 public class BoyApplicationTests {
 	private MockMvc MockMvc;
-	
+
 	@Autowired
     protected WebApplicationContext wac;
-	
 
-	
+	@Autowired
+	private simctrl sim;
+
 	@Before()
 	public void Setup() throws Exception{
 		MockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
 	}
-	
+
 	@Test
 	public void testBoyList()throws Exception {
         MockMvc.perform(get("/boys")
         	.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isOk());
 	}
-	
+
 	@Test
 	public void testBoyAdd() throws Exception{
 		MockMvc.perform(post("/boys?age=17&name=gab"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.age").value(17))
-			.andExpect(jsonPath("$.name").value("gab")); 
+			.andExpect(jsonPath("$.name").value("gab"));
 	}
-	
+
 	@Test
 	public void testBoyUpdate() throws Exception{
 		MockMvc.perform(put("/boys/2?age=11&name=tim"))
@@ -58,11 +62,16 @@ public class BoyApplicationTests {
 		    .andExpect(jsonPath("$.age").value(11))
 		    .andExpect(jsonPath("$.name").value("tim"));
 	}
-	
+
 	@Test
 	public void testBoyDel() throws Exception{
 		MockMvc.perform(delete("/boys/2"))
 	    .andExpect(status().isOk());
+	}
+	@Test
+	public void testSim() throws Exception{
+		Assert.assertEquals("gab_26",sim.hello());
+
 	}
 
 }

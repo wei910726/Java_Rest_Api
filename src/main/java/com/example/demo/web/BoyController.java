@@ -4,18 +4,12 @@ import java.util.List;
 
 import com.example.demo.domain.BoyRepository;
 import com.example.demo.domain.boy;
+import com.example.demo.error.MyException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 @RestController
 public class BoyController {
 	
@@ -80,20 +74,10 @@ public class BoyController {
 	public void twoAdd(){
 	   BoyService.insertTwo();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
+
+	@GetMapping(value="/json")
+	public String json() throws MyException {
+		throw new MyException("出现错误");
+	}
+  }
+

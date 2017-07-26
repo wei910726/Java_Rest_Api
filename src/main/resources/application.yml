@@ -1,5 +1,3 @@
-server:
-    port: 8089
 spring:
     datasource:
       driver-class-name: com.mysql.jdbc.Driver
@@ -10,4 +8,25 @@ spring:
       hibernate:
         ddl-auto: update
       show-sql: true
+    profiles:
+      active: dev
+
+    thymeleaf:
+      cache: true
+      check-template-location: true
+      content-type: text/html
+      enabled: true
+      encoding: UTF-8
+      mode: HTML5
+      prefix: classpath:/templates/
+      suffix: .html
+
+
+cn:
+    name: "gab"
+    age : 26
+    full_me : ${cn.name}_${cn.age}
+    randint : ${random.int}
+
+
     
