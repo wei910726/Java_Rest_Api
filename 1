@@ -1,0 +1,6 @@
+postman设置全局变量，告别手动复制token的困扰
+步骤：
+发送登录请求
+在Pre-request Script下面填写“postman.clearGlobalVariable("token")
+在Tests下面填写“postman.setGlobalVariable("token", postman.getResponseHeader("X-Subject-Token")); tests["Status code is 201"] = responseCode.code === 201;”
+点击postman右上角的Manger Environments,点击Globals,输入全局变量token
